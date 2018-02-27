@@ -9,7 +9,7 @@ import csv
 #csvFile = 'myData.csv'
 #csvData = csv.reader(open(csvFile))
 def main():
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_new_images\new_images_metadata.csv',
+    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_rasaInterviews2\rasainterviews2metadata.csv',
               encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',', quotechar='"', doublequote=True )
         for row in reader:
@@ -26,8 +26,9 @@ def printxml(row):
     top_element.setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
     top_element.setAttribute('xsi:schemaLocation',
                              'http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd')
-    print(row['filename'], row['Genre (English)'])
-    if row['Title (English)']:
+
+    if 'Title (English)' in row:
+        #row['Title (English)']:
         elTitleInfo = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
         eTitle = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:title')
         eTitle.appendChild(newdoc.createTextNode(row['Title (English)']))
@@ -35,7 +36,8 @@ def printxml(row):
         elTitleInfo.appendChild(eTitle)
         top_element.appendChild(elTitleInfo)
 
-    if row['Title (Farsi)']:
+    if 'Title (Farsi)' in row:
+        #row['Title (Farsi)']:
         elTitleInfoFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
         eTitleFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:title')
         eTitleFarsi.appendChild(newdoc.createTextNode(row['Title (Farsi)']))
@@ -43,19 +45,16 @@ def printxml(row):
         elTitleInfoFarsi.appendChild(eTitleFarsi)
         top_element.appendChild(elTitleInfoFarsi)
 
-    if row['Genre (English)']:
+    if 'Genre' in row:
+        #row['Genre']
         eGenre = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:genre')
-        eGenre.appendChild(newdoc.createTextNode(row['Genre (English)']))
+        eGenre.appendChild(newdoc.createTextNode(row['Genre']))
         eGenre.setAttribute('lang', 'eng')
         top_element.appendChild(eGenre)
 
-    if row['Genre (Farsi)']:
-        eGenreFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:genre')
-        eGenreFarsi.appendChild(newdoc.createTextNode(row['Genre (Farsi)']))
-        eGenreFarsi.setAttribute('lang', 'per')
-        top_element.appendChild(eGenreFarsi)
 
-    if row['Lat, Lon']:
+    if 'Lat, Lon' in row:
+        #row['Lat, Lon']:
         eLatLonSubject = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:subject')
         eLatLonCartographics = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:cartographics')
         eLatLoncoordinates = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:coordinates')
@@ -64,58 +63,66 @@ def printxml(row):
         eLatLonSubject.appendChild(eLatLonCartographics)
         top_element.appendChild(eLatLonSubject)
 
-    if row['Physical Type']:
+    if 'Physical Type ' in row:
         eExtent = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:extent')
-        eExtent.appendChild(newdoc.createTextNode(row['Physical Type']))
+        eExtent.appendChild(newdoc.createTextNode(row['Physical Type ']))
         top_element.appendChild(eExtent)
 
     # //<mods:note lang="eng" displayLabel="Names">
-    if row['Names (English)']:
-       eNoteNames = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-       eNoteNames.appendChild(newdoc.createTextNode(row['Names (English)']))
-       eNoteNames.setAttribute('lang', 'eng')
-       eNoteNames.setAttribute('displayLabel', 'Names')
-       top_element.appendChild(eNoteNames)
+    if 'Names (Transliterated)' in row:
+       namesEnglishData = row['Names (Transliterated)'].split('/')
+       for data in namesEnglishData:
+           eNoteNames = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+           eNoteNames.appendChild(newdoc.createTextNode(data))
+           eNoteNames.setAttribute('transliteration', 'unspecified')
+           eNoteNames.setAttribute('displayLabel', 'Names')
+           top_element.appendChild(eNoteNames)
 
 
     #//<mods:note lang="per" displayLabel="Names">
-    if row['Names (Farsi)']:
-        eNoteNamesFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-        eNoteNamesFarsi.appendChild(newdoc.createTextNode(row['Names (Farsi)']))
-        eNoteNamesFarsi.setAttribute('lang','per')
-        eNoteNamesFarsi.setAttribute('displayLabel','Names')
-        top_element.appendChild(eNoteNamesFarsi)
+    if 'Names (Farsi)' in row:
+        namesFarsiData = row['Names (Farsi)'].split('/')
+        for data in namesFarsiData:
+            eNoteNamesFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+            eNoteNamesFarsi.appendChild(newdoc.createTextNode(data))
+            eNoteNamesFarsi.setAttribute('lang','per')
+            eNoteNamesFarsi.setAttribute('displayLabel','Names')
+            top_element.appendChild(eNoteNamesFarsi)
 
     #<mods:note lang="eng" displayLabel="Keywords/Chants/Slogans">
-    if row['Keywords/Chants/Slogans (English)']:
-       eNoteKeywords = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-       eNoteKeywords.appendChild(newdoc.createTextNode(row['Keywords/Chants/Slogans (English)']))
-       eNoteKeywords.setAttribute('lang', 'eng')
-       eNoteKeywords.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
-       top_element.appendChild(eNoteKeywords)
+    if 'Keywords/Chants/Slogans (English)' in row:
+       keywordsData = row['Keywords/Chants/Slogans (English)'].split('/')
+       for data in keywordsData:
+           eNoteKeywords = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+           eNoteKeywords.appendChild(newdoc.createTextNode(data))
+           eNoteKeywords.setAttribute('lang', 'eng')
+           eNoteKeywords.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
+           top_element.appendChild(eNoteKeywords)
 
-    if row['Keywords/Chants/Slogans (Farsi)']:
-        eNoteKeywordsFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-        eNoteKeywordsFarsi.appendChild(newdoc.createTextNode(row['Keywords/Chants/Slogans (Farsi)']))
-        eNoteKeywordsFarsi.setAttribute('lang', 'per')
-        eNoteKeywordsFarsi.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
-        top_element.appendChild(eNoteKeywordsFarsi)
+    if 'Keywords/Chants/Slogans (Farsi)' in row:
+        keywordFarsiData = row['Keywords/Chants/Slogans (Farsi)'].split('/')
+        for data in keywordFarsiData:
+            eNoteKeywordsFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+            eNoteKeywordsFarsi.appendChild(newdoc.createTextNode(data))
+            eNoteKeywordsFarsi.setAttribute('lang', 'per')
+            eNoteKeywordsFarsi.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
+            top_element.appendChild(eNoteKeywordsFarsi)
 
     #<mods:note lang="eng">
-    if row['Description (English)']:
+    if 'Description (English)' in row:
         eNoteDescription = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
         eNoteDescription.appendChild(newdoc.createTextNode(row['Description (English)']))
         eNoteDescription.setAttribute('lang', 'eng')
         top_element.appendChild(eNoteDescription)
 
-    if row['Description (Farsi)']:
+    if 'Description (Farsi)' in row:
         eNoteDescriptionFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
         eNoteDescriptionFarsi.appendChild(newdoc.createTextNode(row['Description (Farsi)']))
         eNoteDescriptionFarsi.setAttribute('lang', 'per')
         top_element.appendChild(eNoteDescriptionFarsi)
 
     #<mods:subject><mods:hierarchicalGeographic><mods:country lang="eng">
-    if row['Country (English)']:
+    if 'Country (English)' in row:
         eCountrySubject = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:subject')
         eCountryHierarchicalGeographic = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:hierarchicalGeographic')
         ecountry = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:country')
@@ -125,7 +132,7 @@ def printxml(row):
         eCountrySubject.appendChild(eCountryHierarchicalGeographic)
         top_element.appendChild(eCountrySubject)
 
-    if row['Country (Farsi)']:
+    if 'Country (Farsi)' in row:
         eCountrySubjectFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:subject')
         eCountryHierarchicalGeographicFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3',
                                                                 'mods:hierarchicalGeographic')
@@ -138,18 +145,18 @@ def printxml(row):
 
      #//<mods:subject><mods:hierarchicalGeographic><mods:city lang="eng">
 
-    if row['City (English-LCSH)']:
+    if 'City (LCSH or Transliterated)' in row:
         ecitySubject = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:subject')
         ecityHierarchicalGeographic = newdoc.createElementNS('http://www.loc.gov/mods/v3',
                                                                 'mods:hierarchicalGeographic')
         ecity = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:city')
-        ecity.appendChild(newdoc.createTextNode(row['City (English-LCSH)']))
-        ecity.setAttribute('lang', 'eng')
+        ecity.appendChild(newdoc.createTextNode(row['City (LCSH or Transliterated)']))
+        ecity.setAttribute('transliteration', 'unspecified')
         ecityHierarchicalGeographic.appendChild(ecity)
         ecitySubject.appendChild(ecityHierarchicalGeographic)
         top_element.appendChild(ecitySubject)
 
-    if row['City (Farsi)']:
+    if 'City (Farsi)' in row:
         ecitySubjectFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:subject')
         ecityHierarchicalGeographicFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3',
                                                                      'mods:hierarchicalGeographic')
@@ -160,30 +167,7 @@ def printxml(row):
         ecitySubjectFarsi.appendChild(ecityHierarchicalGeographicFarsi)
         top_element.appendChild(ecitySubjectFarsi)
 
-     #<mods:subject><mods:hierarchicalGeographic><mods:area lang="eng">
-    if row['Place (English)']:
-        eplaceSubject = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:subject')
-        eplaceHierarchicalGeographic = newdoc.createElementNS('http://www.loc.gov/mods/v3',
-                                                             'mods:hierarchicalGeographic')
-        eplace = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:area')
-        eplace.appendChild(newdoc.createTextNode(row['Place (English)']))
-        eplace.setAttribute('lang', 'eng')
-        eplaceHierarchicalGeographic.appendChild(eplace)
-        eplaceSubject.appendChild(eplaceHierarchicalGeographic)
-        top_element.appendChild(eplaceSubject)
-
-    if row['Place (Farsi)']:
-        eplaceSubjectFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:subject')
-        eplaceHierarchicalGeographicFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3',
-                                                              'mods:hierarchicalGeographic')
-        eplaceFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:area')
-        eplaceFarsi.appendChild(newdoc.createTextNode(row['Place (Farsi)']))
-        eplaceFarsi.setAttribute('lang', 'per')
-        eplaceHierarchicalGeographicFarsi.appendChild(eplaceFarsi)
-        eplaceSubjectFarsi.appendChild(eplaceHierarchicalGeographicFarsi)
-        top_element.appendChild(eplaceSubjectFarsi)
-
-    if row['Date (Normalized)']:
+    if 'Date (Normalized)' in row:
         eOriginInfoDateNormalized = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:originInfo')
         eDateCreatedNormalized = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:dateCreated')
         eDateCreatedNormalized.appendChild(newdoc.createTextNode(row['Date (Normalized)']))
@@ -191,7 +175,7 @@ def printxml(row):
         eOriginInfoDateNormalized.appendChild(eDateCreatedNormalized)
         top_element.appendChild(eOriginInfoDateNormalized)
 
-    if row['Date (Gregorian)']:
+    if 'Date (Gregorian)' in row:
         eOriginInfoDateGregorian = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:originInfo')
         eDateCreatedGregorian = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:dateCreated')
         eDateCreatedGregorian.appendChild(newdoc.createTextNode(row['Date (Gregorian)']))
@@ -199,7 +183,7 @@ def printxml(row):
         eOriginInfoDateGregorian.appendChild(eDateCreatedGregorian)
         top_element.appendChild(eOriginInfoDateGregorian)
 
-    if row['Date (Farsi)']:
+    if 'Date (Farsi)' in row:
         eOriginInfoDateFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:originInfo')
         eDateCreatedFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:dateCreated')
         eDateCreatedFarsi.appendChild(newdoc.createTextNode(row['Date (Farsi)']))
@@ -208,16 +192,28 @@ def printxml(row):
         top_element.appendChild(eOriginInfoDateFarsi)
 
     #mods:identifier type=local
-    if row['filename']:
+    if 'file name (no extension indicates folder name)' in row:
         eidentifier = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:identifier')
-        eidentifier.appendChild(newdoc.createTextNode(row['filename']))
+        eidentifier.appendChild(newdoc.createTextNode(row['file name (no extension indicates folder name)']))
         eidentifier.setAttribute('type', 'local')
         top_element.appendChild(eidentifier)
+        with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_rasainterviews1\mods\{}.xml'.format(
+                row['file name (no extension indicates folder name)']), 'w', encoding='utf-8') as f:
+            f.write(newdoc.toprettyxml())
+    elif row['Filename']:
+        eidentifier = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:identifier')
+        eidentifier.appendChild(newdoc.createTextNode(row['Filename']))
+        eidentifier.setAttribute('type', 'local')
+        top_element.appendChild(eidentifier)
+        with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_rasainterviews2\mods\{}.xml'.format(
+                row['Filename']), 'w', encoding='utf-8') as f:
+            f.write(newdoc.toprettyxml())
+
+
 
     print(newdoc.toprettyxml())
 
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_new_images\mods\{}.xml'.format(row['filename']), 'w', encoding='utf-8') as f:
-        f.write(newdoc.toprettyxml())
+
 
 
 

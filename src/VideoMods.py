@@ -219,6 +219,7 @@ def printxml(row):
     if row['filename']:
         eidentifier = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:identifier')
         eidentifier.appendChild(newdoc.createTextNode(row['filename']))
+        eidentifier.setAttribute('type', 'local')
         top_element.appendChild(eidentifier)
 
     print(newdoc.toprettyxml())

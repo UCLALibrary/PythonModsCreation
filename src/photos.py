@@ -9,7 +9,7 @@ import csv
 #csvFile = 'myData.csv'
 #csvData = csv.reader(open(csvFile))
 def main():
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_new_images\new_images_metadata.csv',
+    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_photos4\gm_photos4_metadata.csv',
               encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',', quotechar='"', doublequote=True )
         for row in reader:
@@ -71,35 +71,43 @@ def printxml(row):
 
     # //<mods:note lang="eng" displayLabel="Names">
     if row['Names (English)']:
-       eNoteNames = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-       eNoteNames.appendChild(newdoc.createTextNode(row['Names (English)']))
-       eNoteNames.setAttribute('lang', 'eng')
-       eNoteNames.setAttribute('displayLabel', 'Names')
-       top_element.appendChild(eNoteNames)
+       namesEnglishData = row['Names (English)'].split('/')
+       for data in namesEnglishData:
+           eNoteNames = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+           eNoteNames.appendChild(newdoc.createTextNode(data))
+           eNoteNames.setAttribute('lang', 'eng')
+           eNoteNames.setAttribute('displayLabel', 'Names')
+           top_element.appendChild(eNoteNames)
 
 
     #//<mods:note lang="per" displayLabel="Names">
     if row['Names (Farsi)']:
-        eNoteNamesFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-        eNoteNamesFarsi.appendChild(newdoc.createTextNode(row['Names (Farsi)']))
-        eNoteNamesFarsi.setAttribute('lang','per')
-        eNoteNamesFarsi.setAttribute('displayLabel','Names')
-        top_element.appendChild(eNoteNamesFarsi)
+        namesFarsiData = row['Names (Farsi)'].split('/')
+        for data in namesFarsiData:
+            eNoteNamesFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+            eNoteNamesFarsi.appendChild(newdoc.createTextNode(data))
+            eNoteNamesFarsi.setAttribute('lang','per')
+            eNoteNamesFarsi.setAttribute('displayLabel','Names')
+            top_element.appendChild(eNoteNamesFarsi)
 
     #<mods:note lang="eng" displayLabel="Keywords/Chants/Slogans">
     if row['Keywords/Chants/Slogans (English)']:
-       eNoteKeywords = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-       eNoteKeywords.appendChild(newdoc.createTextNode(row['Keywords/Chants/Slogans (English)']))
-       eNoteKeywords.setAttribute('lang', 'eng')
-       eNoteKeywords.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
-       top_element.appendChild(eNoteKeywords)
+       keywordsData = row['Keywords/Chants/Slogans (English)'].split('/')
+       for data in keywordsData:
+           eNoteKeywords = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+           eNoteKeywords.appendChild(newdoc.createTextNode(data))
+           eNoteKeywords.setAttribute('lang', 'eng')
+           eNoteKeywords.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
+           top_element.appendChild(eNoteKeywords)
 
     if row['Keywords/Chants/Slogans (Farsi)']:
-        eNoteKeywordsFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-        eNoteKeywordsFarsi.appendChild(newdoc.createTextNode(row['Keywords/Chants/Slogans (Farsi)']))
-        eNoteKeywordsFarsi.setAttribute('lang', 'per')
-        eNoteKeywordsFarsi.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
-        top_element.appendChild(eNoteKeywordsFarsi)
+        keywordFarsiData = row['Keywords/Chants/Slogans (Farsi)'].split('/')
+        for data in keywordFarsiData:
+            eNoteKeywordsFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+            eNoteKeywordsFarsi.appendChild(newdoc.createTextNode(data))
+            eNoteKeywordsFarsi.setAttribute('lang', 'per')
+            eNoteKeywordsFarsi.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
+            top_element.appendChild(eNoteKeywordsFarsi)
 
     #<mods:note lang="eng">
     if row['Description (English)']:
@@ -216,7 +224,7 @@ def printxml(row):
 
     print(newdoc.toprettyxml())
 
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_new_images\mods\{}.xml'.format(row['filename']), 'w', encoding='utf-8') as f:
+    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_photos4\mods\{}.xml'.format(row['filename']), 'w', encoding='utf-8') as f:
         f.write(newdoc.toprettyxml())
 
 
