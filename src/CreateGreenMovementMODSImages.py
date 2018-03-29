@@ -26,6 +26,35 @@ def printxml(row):
     top_element.setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
     top_element.setAttribute('xsi:schemaLocation',
                              'http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd')
+
+    # relatedItem Collection Name and Repository name
+
+    elRelatedItem = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:relatedItem')
+    eTitleInfoCollectionName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
+    eTitleCollectionName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:title')
+    eTitleCollectionName.appendChild(newdoc.createTextNode('Green Movement collection'))
+    eTitleInfoCollectionName.appendChild(eTitleCollectionName)
+    elRelatedItem.appendChild(eTitleInfoCollectionName)
+    top_element.appendChild(elRelatedItem)
+    eNameRepository = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:relatedItem')
+    eNameRepository.setAttribute('type', 'corporate')
+    eNameRepository.setAttribute('authority', 'naf')
+    eNamePartRepository = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:namePart')
+    eNamePartRepository.appendChild(newdoc.createTextNode('University of California, Los Angeles. $b Library.'))
+    eNameRepository.appendChild(eNamePartRepository)
+    eNameRoleRepository = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:role')
+    eNameRolTermTextRepository = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:roleTerm')
+    eNameRolTermTextRepository.setAttribute('type', 'text')
+    eNameRolTermTextRepository.appendChild(newdoc.createTextNode('repository'))
+    eNameRolTermCodeRepository = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:roleTerm')
+    eNameRolTermCodeRepository.setAttribute('type', 'code')
+    eNameRolTermCodeRepository.setAttribute('authority', 'marcrelator')
+    eNameRolTermCodeRepository.appendChild(newdoc.createTextNode('rps'))
+    eNameRoleRepository.appendChild(eNameRolTermTextRepository)
+    eNameRoleRepository.appendChild(eNameRolTermCodeRepository)
+    eNameRepository.appendChild(eNameRoleRepository)
+    top_element.appendChild(eNameRepository)
+
     print(row['filename'], row['Genre (English)'])
     if row['Title (English)']:
         elTitleInfo = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
@@ -65,7 +94,7 @@ def printxml(row):
         top_element.appendChild(eLatLonSubject)
 
     if row['Physical Type']:
-        eExtent = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:extent')
+        eExtent = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:typeOfResource')
         eExtent.appendChild(newdoc.createTextNode(row['Physical Type']))
         top_element.appendChild(eExtent)
 
