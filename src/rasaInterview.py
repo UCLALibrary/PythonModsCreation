@@ -18,6 +18,7 @@ def main():
             printxml(row)
 
 def printxml(row):
+
     impl = getDOMImplementation()
     newdoc = impl.createDocument('http://www.loc.gov/mods/v3', 'mods:mods', None)
     top_element = newdoc.documentElement
@@ -130,6 +131,23 @@ def printxml(row):
                 top_element.appendChild(eTypeOfResource)
             top_element.appendChild(ePhysicalDescription)
 
+    # <mods:note lang="eng">
+
+    if 'Description (English)' in row:
+        if row['Description (English)']:
+            eNoteDescription = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+            eNoteDescription.appendChild(newdoc.createTextNode(row['Description (English)']))
+            eNoteDescription.setAttribute('lang', 'eng')
+            top_element.appendChild(eNoteDescription)
+
+    if 'Description (Farsi)' in row:
+        if row['Description (Farsi)']:
+            eNoteDescriptionFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
+            eNoteDescriptionFarsi.appendChild(newdoc.createTextNode(row['Description (Farsi)']))
+            eNoteDescriptionFarsi.setAttribute('lang', 'per')
+            top_element.appendChild(eNoteDescriptionFarsi)
+
+
     # //<mods:note lang="eng" displayLabel="Names">
     if 'Names (Transliterated)' in row:
         if row['Names (Transliterated)']:
@@ -154,6 +172,7 @@ def printxml(row):
                 eNoteNamesFarsi.setAttribute('displayLabel','Names')
                 top_element.appendChild(eNoteNamesFarsi)
 
+
     #<mods:note lang="eng" displayLabel="Keywords/Chants/Slogans">
     if 'Keywords/Chants/Slogans (English)' in row:
         if row['Keywords/Chants/Slogans (Farsi)']:
@@ -175,20 +194,8 @@ def printxml(row):
                 eNoteKeywordsFarsi.setAttribute('displayLabel', 'Keywords/Chants/Slogans')
                 top_element.appendChild(eNoteKeywordsFarsi)
 
-    #<mods:note lang="eng">
-    if 'Description (English)' in row:
-        if row['Description (English)']:
-            eNoteDescription = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-            eNoteDescription.appendChild(newdoc.createTextNode(row['Description (English)']))
-            eNoteDescription.setAttribute('lang', 'eng')
-            top_element.appendChild(eNoteDescription)
 
-    if 'Description (Farsi)' in row:
-        if row['Description (Farsi)']:
-            eNoteDescriptionFarsi = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:note')
-            eNoteDescriptionFarsi.appendChild(newdoc.createTextNode(row['Description (Farsi)']))
-            eNoteDescriptionFarsi.setAttribute('lang', 'per')
-            top_element.appendChild(eNoteDescriptionFarsi)
+
 
     #<mods:subject><mods:hierarchicalGeographic><mods:country lang="eng">
     if 'Country (English)' in row:
