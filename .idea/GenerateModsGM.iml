@@ -7,5 +7,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (PythonModsCreation)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ValidateTiffs" />
+    <orderEntry type="module" module-name="PDFCreation" />
   </component>
 </module>
