@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GenerateModsGM.iml" filepath="$PROJECT_DIR$/.idea/GenerateModsGM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../PDFCreation/.idea/PDFCreation.iml" filepath="$PROJECT_DIR$/../PDFCreation/.idea/PDFCreation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ValidateTiffs/.idea/ValidateTiffs.iml" filepath="$PROJECT_DIR$/../ValidateTiffs/.idea/ValidateTiffs.iml" />
     </modules>
   </component>
 </project>

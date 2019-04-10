@@ -6,5 +6,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.6 (GenerateModsGM)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ValidateTiffs" />
+    <orderEntry type="module" module-name="PDFCreation" />
   </component>
 </module>

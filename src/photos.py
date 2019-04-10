@@ -9,7 +9,7 @@ import csv
 #csvFile = 'myData.csv'
 #csvData = csv.reader(open(csvFile))
 def main():
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_photos4\gm_photos4_metadata.csv',
+    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\armenia_testbatch1\test batch 1 (002-050) - test batch 1.csv',
               encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',', quotechar='"', doublequote=True )
         for row in reader:
@@ -256,7 +256,7 @@ def printxml(row):
 
     print(newdoc.toprettyxml())
 
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_photos4\mods\{}.xml'.format(row['filename'].strip()), 'w', encoding='utf-8') as f:
+    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_azarposters1\mods\{}.xml'.format(row['filename'].strip()), 'w', encoding='utf-8') as f:
         f.write(newdoc.toprettyxml())
 
 
