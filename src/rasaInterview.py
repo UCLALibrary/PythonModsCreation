@@ -31,12 +31,23 @@ def printxml(row):
     # relatedItem Collection Name and Repository name
 
     elRelatedItem = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:relatedItem')
+    elRelatedItem.setAttribute('type', 'host')
     eTitleInfoCollectionName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
     eTitleCollectionName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:title')
-    eTitleCollectionName.appendChild(newdoc.createTextNode('Green Movement collection'))
+    eTitleCollectionName.appendChild(newdoc.createTextNode('Green Movement (Iran)'))
     eTitleInfoCollectionName.appendChild(eTitleCollectionName)
     elRelatedItem.appendChild(eTitleInfoCollectionName)
     top_element.appendChild(elRelatedItem)
+
+    elProgramRelatedItem = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:relatedItem')
+    elProgramRelatedItem.setAttribute('type', 'program')
+    eTitleInfoProgramName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
+    eTitleProgramName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:title')
+    eTitleProgramName.appendChild(newdoc.createTextNode('International Digital Ephemera Project'))
+    eTitleInfoProgramName.appendChild(eTitleProgramName)
+    elProgramRelatedItem.appendChild(eTitleInfoProgramName)
+    top_element.appendChild(elProgramRelatedItem)
+
     eNameRepository = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:name')
     eNameRepository.setAttribute('type','corporate')
     eNameRepository.setAttribute('authority','naf')

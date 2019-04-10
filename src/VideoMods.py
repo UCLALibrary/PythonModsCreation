@@ -9,7 +9,7 @@ import csv
 #csvFile = 'myData.csv'
 #csvData = csv.reader(open(csvFile))
 def main():
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_rasatv1\gm_rasatv1_metadata.csv',
+    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_saharkhiz\gm_saharkhiz_metadata.csv',
               encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',', quotechar='"', doublequote=True)
         for row in reader:
@@ -31,12 +31,23 @@ def printxml(row):
     # relatedItem Collection Name and Repository name
 
     elRelatedItem = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:relatedItem')
+    elRelatedItem.setAttribute('type', 'host')
     eTitleInfoCollectionName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
     eTitleCollectionName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:title')
-    eTitleCollectionName.appendChild(newdoc.createTextNode('Green Movement collection'))
+    eTitleCollectionName.appendChild(newdoc.createTextNode('Green Movement (Iran)'))
     eTitleInfoCollectionName.appendChild(eTitleCollectionName)
     elRelatedItem.appendChild(eTitleInfoCollectionName)
     top_element.appendChild(elRelatedItem)
+
+    elProgramRelatedItem = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:relatedItem')
+    elProgramRelatedItem.setAttribute('type','program')
+    eTitleInfoProgramName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:titleInfo')
+    eTitleProgramName = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:title')
+    eTitleProgramName.appendChild(newdoc.createTextNode('International Digital Ephemera Project'))
+    eTitleInfoProgramName.appendChild(eTitleProgramName)
+    elProgramRelatedItem.appendChild(eTitleInfoProgramName)
+    top_element.appendChild(elProgramRelatedItem)
+
     eNameRepository = newdoc.createElementNS('http://www.loc.gov/mods/v3', 'mods:name')
     eNameRepository.setAttribute('type', 'corporate')
     eNameRepository.setAttribute('authority', 'naf')
@@ -288,7 +299,7 @@ def printxml(row):
 
     print(newdoc.toprettyxml())
 
-    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_rasatv1\mods\{}.xml'.format(row['filename'].strip()), 'w', encoding='utf-8') as f:
+    with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_saharkhiz\mods\{}.xml'.format(row['filename'].strip()), 'w', encoding='utf-8') as f:
         f.write(newdoc.toprettyxml())
 
 
