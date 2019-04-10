@@ -10,7 +10,6 @@ import csv
 #csvData = csv.reader(open(csvFile))
 def main():
     with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_ashraf_photos\gm_ashraf_photos_metadata.csv',
-
               encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',', quotechar='"', doublequote=True )
         for row in reader:
@@ -268,9 +267,7 @@ def printxml(row):
 
     print(newdoc.toprettyxml())
 
-
     with open(r'\\svm-netapp-dlib.in.library.ucla.edu\DLIngest\gm_ashraf_photos\mods\{}.xml'.format(row['filename'].strip()), 'w', encoding='utf-8') as f:
-
         f.write(newdoc.toprettyxml())
 
 
