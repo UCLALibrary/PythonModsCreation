@@ -24,6 +24,6 @@
 
 ## Run Code 
 
-1. If creating mods for photos run photos.py file
+1. If creating mods for photos run photos.py file [Docs](https://www.jetbrains.com/help/pycharm/quick-start-guide.html#run)
 2. Update the code to point to right spreadsheet file location and create the mods directory on Netapp and specify the path in the script.
 3. The easiest way to run an application is to right-click its background in the editor, and then choose Run <name> from the context menu:
