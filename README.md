@@ -20,7 +20,7 @@
 + Choose the base interpreter from the list, or click Choose the base interpreter and find the base interpreter in the your file system.
 + Select the Inherit global site-packages checkbox if you want to inherit your global site-packages directory. This checkbox corresponds to the --system-site-packages option of the virtualenv tool.
 + Select the Make available to all projects checkbox, if needed.
-4. [here](https://www.jetbrains.com/help/pycharm/project-interpreter.html)
+4. [More here](https://www.jetbrains.com/help/pycharm/project-interpreter.html)
 
 ## Run Code 
 
